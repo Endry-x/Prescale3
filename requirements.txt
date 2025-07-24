@@ -1,1 +1,6 @@
-
+streamlit
+numpy
+pillow
+matplotlib
+pandas
+scikit-image
