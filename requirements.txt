@@ -3,4 +3,5 @@ numpy
 pillow
 matplotlib
 pandas
-scikit-image
+scikit-image          # per Lab e ΔE*
+scikit-learn          # KMeans, per estrarre i campioni dalla palette
