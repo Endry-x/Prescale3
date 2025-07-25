@@ -42,8 +42,12 @@ centers  = centers[np.argsort(centers[:, 0])]   # ordina per luminosità
 
 # ---------- 2. ΔE* e maschera ---------------------------------------
 lab_img   = color.rgb2lab(arr_rgb)
-delta_min = np.min([deltaE_ciede2000(lab_img, c) for c in centers], axis=0)
-
+delta_stack = np.stack(
+    [deltaE_ciede2000(lab_img, c.reshape(1, 1, 3))   # <- reshape (1,1,3)
+     for c in centers],
+    axis=0                                            # shape (n_colors, H, W)
+)
+delta_min = delta_stack.min(axis=0)                   # shape (H, W)
 delta_thr = st.sidebar.slider("Tolleranza ΔE*", 0.0, 50.0, 18.0, 0.1)
 mask = delta_min < delta_thr
 mask = morphology.remove_small_objects(mask, min_size=50)
